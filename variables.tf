@@ -15,6 +15,24 @@ variable "subnet_id" {
   type        = string
 }
 
+variable "security_group_ids" {
+  description = "このEC2インスタンスに付与する、セキュリティグループ。指定しない場合は、アウトバウンドのみを許可するセキュリティグループを作成して付与する"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpc_id" {
+  description = "このEC2インスタンスを配置する、VPC ID。セキュリティグループをモジュール側で作成する場合、必須"
+  type        = string
+  default     = null
+}
+
+variable "module_security_group_name" {
+  description = "このモジュール側でセキュリティグループを作成する場合の、セキュリティグループ名"
+  type        = string
+  default     = "my-ssh-key-less-instance-sg"
+}
+
 variable "instance_type" {
   description = "EC2インスタンスタイプ"
   type        = string

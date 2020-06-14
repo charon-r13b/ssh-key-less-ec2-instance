@@ -95,4 +95,24 @@ resource "aws_instance" "this" {
   instance_type        = var.instance_type
   iam_instance_profile = var.iam_instance_profile_name != null ? var.iam_instance_profile_name : aws_iam_instance_profile.systems_manager[0].name
   subnet_id            = var.subnet_id
+
+  security_groups = length(var.security_group_ids) > 0 ? var.security_group_ids : [aws_security_group.this[0].id]
+}
+
+resource "aws_security_group" "this" {
+  count = length(var.security_group_ids) == 0 ? 1 : 0
+
+  name   = var.module_security_group_name
+  vpc_id = var.vpc_id
+}
+
+resource "aws_security_group_rule" "egress" {
+  count = length(var.security_group_ids) == 0 ? 1 : 0
+
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.this[0].id
 }
