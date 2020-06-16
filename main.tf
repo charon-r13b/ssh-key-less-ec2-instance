@@ -96,9 +96,10 @@ resource "aws_instance" "this" {
   iam_instance_profile = var.iam_instance_profile_name != null ? var.iam_instance_profile_name : aws_iam_instance_profile.systems_manager[0].name
   subnet_id            = var.subnet_id
 
-  security_groups = length(var.security_group_ids) > 0 ? var.security_group_ids : [aws_security_group.this[0].id]
+  #security_groups = length(var.security_group_ids) > 0 ? var.security_group_ids : [aws_security_group.this[0].id]
 }
 
+/*
 resource "aws_security_group" "this" {
   count = length(var.security_group_ids) == 0 ? 1 : 0
 
@@ -116,3 +117,4 @@ resource "aws_security_group_rule" "egress" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.this[0].id
 }
+*/
