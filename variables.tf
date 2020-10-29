@@ -39,6 +39,12 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
+variable "root_block_volume_size" {
+  description = "EC2のルートボリュームサイズ"
+  type        = number
+  default     = null
+}
+
 variable "iam_instance_profile_name" {
   description = "作成するEC2インスタンスに与えるIAMインスタンスプロファイル名。指定しない場合は、必要最低限のIAMロールおよびIAMインスタンスプロファイルをモジュール側で作成する"
   type        = string

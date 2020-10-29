@@ -97,6 +97,10 @@ resource "aws_instance" "this" {
   subnet_id            = var.subnet_id
 
   vpc_security_group_ids = length(var.security_group_ids) > 0 ? var.security_group_ids : [aws_security_group.this[0].id]
+
+  root_block_device {
+    volume_size = var.root_block_volume_size
+  }
 }
 
 resource "aws_security_group" "this" {
