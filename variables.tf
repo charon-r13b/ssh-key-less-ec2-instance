@@ -27,7 +27,7 @@ variable "vpc_id" {
   default     = null
 }
 
-variable "module_security_group_name" {
+variable "creation_security_group_name" {
   description = "このモジュール側でセキュリティグループを作成する場合の、セキュリティグループ名"
   type        = string
   default     = "my-ssh-key-less-instance-sg"

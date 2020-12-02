@@ -106,7 +106,7 @@ resource "aws_instance" "this" {
 resource "aws_security_group" "this" {
   count = length(var.security_group_ids) == 0 ? 1 : 0
 
-  name   = var.module_security_group_name
+  name   = var.creation_security_group_name
   vpc_id = var.vpc_id
 }
 
