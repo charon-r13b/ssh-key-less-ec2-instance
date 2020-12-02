@@ -51,13 +51,19 @@ variable "iam_instance_profile_name" {
   default     = null
 }
 
-variable "module_creation_iam_role_name" {
+variable "create_iam" {
+  description = "このモジュールでIAMロール、インスタンスプロファイルを作成する場合はtrueを指定する"
+  type        = bool
+  default     = true
+}
+
+variable "creation_iam_role_name" {
   description = "このモジュール側でIAMロールを作成する場合の、IAMロール名"
   type        = string
   default     = "MySshKeyLessEc2Role"
 }
 
-variable "module_creation_iam_instance_profile_name" {
+variable "creation_iam_instance_profile_name" {
   description = "このモジュール側でIAMインスタンスプロファイルを作成する場合の、IAMインスタンスプロファイル名"
   type        = string
   default     = "MySshKeyLessEc2InstanceProfile"

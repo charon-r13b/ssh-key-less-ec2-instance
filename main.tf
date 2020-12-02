@@ -69,8 +69,8 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "role" {
-  count              = var.iam_instance_profile_name != null ? 0 : 1
-  name               = var.module_creation_iam_role_name
+  count              = var.create_iam ? 1 : 0
+  name               = var.creation_iam_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -79,21 +79,21 @@ data "aws_iam_policy" "systems_manager" {
 }
 
 resource "aws_iam_role_policy_attachment" "default" {
-  count      = var.iam_instance_profile_name != null ? 0 : 1
+  count      = var.create_iam ? 1 : 0
   role       = aws_iam_role.role[count.index].name
   policy_arn = data.aws_iam_policy.systems_manager.arn
 }
 
 resource "aws_iam_instance_profile" "systems_manager" {
-  count = var.iam_instance_profile_name != null ? 0 : 1
-  name  = var.module_creation_iam_instance_profile_name
+  count = var.create_iam ? 1 : 0
+  name  = var.creation_iam_instance_profile_name
   role  = aws_iam_role.role[count.index].name
 }
 
 resource "aws_instance" "this" {
   ami                  = var.ami != null ? var.ami : data.aws_ami.linux.image_id
   instance_type        = var.instance_type
-  iam_instance_profile = var.iam_instance_profile_name != null ? var.iam_instance_profile_name : aws_iam_instance_profile.systems_manager[0].name
+  iam_instance_profile = var.create_iam ? aws_iam_instance_profile.systems_manager[0].name : var.iam_instance_profile_name
   subnet_id            = var.subnet_id
 
   vpc_security_group_ids = length(var.security_group_ids) > 0 ? var.security_group_ids : [aws_security_group.this[0].id]
