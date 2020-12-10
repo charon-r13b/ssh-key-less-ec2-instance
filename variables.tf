@@ -27,6 +27,12 @@ variable "vpc_id" {
   default     = null
 }
 
+variable "user_data" {
+  description = "User Dataを指定する"
+  type        = string
+  default     = null
+}
+
 variable "creation_security_group_name" {
   description = "このモジュール側でセキュリティグループを作成する場合の、セキュリティグループ名"
   type        = string
