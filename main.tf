@@ -98,7 +98,7 @@ resource "aws_instance" "this" {
 
   vpc_security_group_ids = length(var.security_group_ids) > 0 ? var.security_group_ids : [aws_security_group.this[0].id]
 
-  user_data_base64 = var.user_data != null ? base64encode(var.user_data) : null
+  user_data = var.user_data != null ? var.user_data : null
 
   root_block_device {
     volume_size = var.root_block_volume_size
